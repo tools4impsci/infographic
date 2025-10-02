@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: The Activist Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Action Red -->
+    <!-- Application Structure Plan: The SPA is structured with a fixed top navigation to guide students through the project logically: Overview, Planning Phases, a Case Study for inspiration, and the Rubric. This structure breaks down the complex task of creating an infographic into a clear, step-by-step process. The core of the application is the three-phase planning process, presented as tabs. Each tab contains accordion-style activities with integrated, interactive tools. This design facilitates a focused, hands-on approach to planning, ensuring students consider audience, message, data, and visual strategy before starting design work. -->
+    <!-- Visualization & Content Choices: Report Info: Infographic Planning Process -> Goal: Organize/Guide -> Viz/Presentation: Tabbed Interface & Accordions -> Interaction: Click to navigate phases and reveal activities -> Justification: Manages cognitive load by presenting a complex creative process in a structured, sequential manner. Report Info: W.E.B. Du Bois Data Portraits -> Goal: Inspire/Analyze -> Viz/Presentation: Recreated charts -> Interaction: Hover for tooltips -> Justification: Provides a direct, historical example of data visualization as activism, grounding the project in a real-world precedent. Library: Chart.js. Report Info: Layout Planning -> Goal: Organize/Structure -> Viz/Presentation: Interactive HTML wireframes -> Interaction: Drag-and-drop text blocks -> Justification: Allows students to visually experiment with information hierarchy and flow, a critical step in infographic design, in a low-stakes environment. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8F7F4; color: #3C3C3B; }
+        h1, h2, h3, h4 { font-family: 'Lora', serif; }
+        .nav-link { transition: color 0.3s ease, border-bottom-color 0.3s ease; border-bottom: 2px solid transparent; }
+        .nav-link.active, .nav-link:hover { color: #D72638; border-bottom-color: #D72638; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .tab-button { transition: background-color 0.3s ease, color 0.3s ease; }
+        .tab-button.active { background-color: #D72638; color: #FFFFFF; }
+        .chart-container { position: relative; width: 100%; max-width: 500px; margin: auto; height: 350px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .wireframe-zone { border: 2px dashed #cbd5e1; min-height: 80px; transition: background-color 0.2s; }
+        .wireframe-zone.drag-over { background-color: #d726381a; }
+        .data-draggable { cursor: move; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-10 border-b border-gray-200">
+        <nav id="main-nav" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center"><span class="font-bold text-lg text-[#3C3C3B]">Activist Infographic Project</span></div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" data-target="overview" class="nav-link active px-3 py-2 text-sm font-medium">Overview</a>
+                        <a href="#" data-target="phases" class="nav-link px-3 py-2 text-sm font-medium">Planning Tools</a>
+                        <a href="#" data-target="case-study" class="nav-link px-3 py-2 text-sm font-medium">Case Study</a>
+                        <a href="#" data-target="rubric" class="nav-link px-3 py-2 text-sm font-medium">Deliverable & Rubric</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <select id="mobile-nav" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option value="overview">Overview</option>
+                        <option value="phases">Planning Tools</option>
+                        <option value="case-study">Case Study</option>
+                        <option value="rubric">Deliverable & Rubric</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <section id="overview" class="content-section active">
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Project: The Activist Infographic</h1>
+                <p class="text-lg text-[#D72638] mb-6">Using Data Visualization for Social Change</p>
+                <div class="space-y-4 text-gray-700 leading-relaxed">
+                    <p><strong>Weight:</strong> 10% of Final Grade</p>
+                    <h2 class="text-2xl font-semibold text-gray-800 pt-4">Project Purpose</h2>
+                    <p>This project challenges you to move beyond academic analysis and engage in public persuasion. You will select a social problem and create a compelling infographic designed to inform a specific audience and persuade them to take action. This is an exercise in information design as a form of activism, requiring you to synthesize research, data, and narrative into a single, powerful visual argument.</p>
+                    <h2 class="text-2xl font-semibold text-gray-800 pt-4">Learning Objectives</h2>
+                    <ul class="list-disc list-outside ml-5 space-y-2">
+                        <li>Define a clear, persuasive message for a specific target audience.</li>
+                        <li>Select and frame data to support a central argument effectively and ethically.</li>
+                        <li>Apply principles of visual hierarchy, layout, and information design.</li>
+                        <li>Develop a clear and compelling call to action to mobilize an audience.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="phases" class="content-section">
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Infographic Planning Tools</h1>
+                <div id="tabs-container" class="flex border-b border-gray-200">
+                    <button data-tab="phase1" class="tab-button active flex-1 py-2 px-4 text-center font-medium rounded-t-lg">Phase 1: Framing</button>
+                    <button data-tab="phase2" class="tab-button flex-1 py-2 px-4 text-center font-medium rounded-t-lg">Phase 2: Visual Strategy</button>
+                    <button data-tab="phase3" class="tab-button flex-1 py-2 px-4 text-center font-medium rounded-t-lg">Phase 3: Content</button>
+                </div>
+                <div class="mt-6">
+                    <div id="phase1" class="tab-content">
+                        <div class="space-y-4">
+                            <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 1.1: Problem & Audience</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                    <div class="grid md:grid-cols-2 gap-8">
+                                        <div><h4 class="font-semibold text-lg text-gray-700 mb-2">Define Your Problem</h4><textarea id="problem-def" class="w-full rounded-md border-gray-300" rows="4" placeholder="Briefly define the social problem you are addressing."></textarea></div>
+                                        <div><h4 class="font-semibold text-lg text-gray-700 mb-2">Define Your Target Audience</h4><input type="text" id="audience-name" class="w-full rounded-md border-gray-300 mb-2" placeholder="Audience Group (e.g., University Students)"><textarea id="audience-desc" class="w-full rounded-md border-gray-300" rows="2" placeholder="What do they care about? What is their current level of awareness on this topic?"></textarea></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 1.2: The Core Message</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                    <p class="mb-4 text-gray-600">Distill your entire argument into one powerful sentence. This will be the title or thesis of your infographic.</p>
+                                    <label class="block text-sm font-medium text-gray-700">Your Core Message / Title</label>
+                                    <input type="text" id="core-message" class="mt-1 block w-full rounded-md border-gray-300" placeholder="e.g., Food waste in our city is costing millions and fueling hunger.">
+                                </div>
+                            </div>
+                            <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 1.3: Data Scaffolding</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                    <p class="mb-4 text-gray-600">List 3-5 key data points that support your core message. These will become the building blocks of your infographic.</p>
+                                    <div id="data-points-container" class="space-y-4"></div>
+                                    <button id="add-data-point-btn" class="mt-4 px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg text-sm">Add Data Point</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="phase2" class="tab-content" style="display: none;">
+                        <div class="space-y-4">
+                            <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 2.1: Visual Tone</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                    <p class="mb-4 text-gray-600">Establish the look and feel. What is your central visual metaphor? What colors and fonts will convey your message's tone?</p>
+                                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700">Central Visual Metaphor</label>
+                                            <input type="text" id="visual-metaphor" class="mt-1 block w-full rounded-md border-gray-300" placeholder="e.g., A branching tree, a leaking faucet, a precarious stack of blocks.">
+                                        </div>
+                                        <div id="mood-board">
+                                            <h4 class="font-semibold text-lg text-gray-700 mb-2">Mood Board</h4>
+                                            <div class="border p-4 rounded-lg">
+                                                <div class="mb-4">
+                                                    <label class="block text-sm font-medium text-gray-700">Color Palette</label>
+                                                    <div id="color-palette-selector" class="flex space-x-2 mt-1"></div>
+                                                </div>
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700">Font Pairing</label>
+                                                    <div id="font-pairing-selector" class="space-y-2 mt-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 2.2: Layout & Flow</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                     <p class="mb-4 text-gray-600">Choose a layout and arrange your core message and data points to create a logical flow. Drag your content from the bank into the wireframe sections.</p>
+                                     <div class="grid lg:grid-cols-3 gap-6">
+                                        <div class="lg:col-span-1">
+                                            <h4 class="font-semibold text-lg text-gray-700 mb-2">Content Bank</h4>
+                                            <div id="content-bank" class="space-y-2 border rounded-lg p-3 bg-gray-50"></div>
+                                        </div>
+                                        <div class="lg:col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Layout</label>
+                                            <select id="layout-selector" class="w-full rounded-md border-gray-300 mb-4"><option value="pyramid">Pyramid</option><option value="timeline">Timeline</option><option value="comparison">Comparison</option></select>
+                                            <div id="wireframe-container" class="bg-white border rounded-lg p-4 space-y-4"></div>
+                                        </div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="phase3" class="tab-content" style="display: none;">
+                         <div class="space-y-4">
+                            <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 3.1: Chart & Icon Selection</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                    <p class="mb-4 text-gray-600">For each data point, choose the most effective way to visualize it.</p>
+                                    <div id="chart-selection-container" class="space-y-6"></div>
+                                </div>
+                            </div>
+                             <div class="accordion-item border rounded-lg"><button class="accordion-header w-full flex justify-between items-center text-left p-4 bg-stone-50"><h3 class="font-semibold text-lg text-gray-800">Activity 3.2: Call to Action (CTA)</h3><span class="accordion-icon text-2xl font-thin text-gray-500">+</span></button>
+                                <div class="accordion-content hidden p-6 border-t">
+                                    <p class="mb-4 text-gray-600">What is the single, clear action you want your audience to take after reading your infographic?</p>
+                                    <label class="block text-sm font-medium text-gray-700">Your Call to Action</label>
+                                    <input type="text" id="call-to-action" class="mt-1 block w-full rounded-md border-gray-300" placeholder="e.g., Sign the petition at [URL], Call your representative at [Phone Number].">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="case-study" class="content-section">
+            <div class="bg-white rounded-lg shadow-sm p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Case Study: W.E.B. Du Bois' Data Portraits</h1>
+                <p class="text-lg text-gray-600 mb-6">Visualizing Data as Activism</p>
+                <p class="text-gray-700 leading-relaxed mb-8">In 1900, W.E.B. Du Bois's "Exhibit of American Negroes" in Paris used a series of stunning data visualizations to argue for the progress and humanity of Black Americans. These "data portraits" were a form of activism. By presenting clear, compelling data on economic and social realities, Du Bois created a powerful counter-narrative to the prevailing racism of the era. This is a foundational example of using information design to make a persuasive argument for social change.</p>
+                
+                <hr class="my-12 border-t-2 border-gray-200">
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Argument 1: Demonstrating Educational Progress</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">This chart powerfully visualizes the dramatic increase in literacy among Black Americans in Georgia in the decades following emancipation. The thick black bar, representing illiteracy, shrinks dramatically over time. This visualization is a direct rebuttal to racist arguments of the era about intellectual capacity, serving as an undeniable testament to a community's determined pursuit of education against all odds.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="duboisLiteracyChart"></canvas>
+                    </div>
+                </div>
+
+                <hr class="my-12 border-t-2 border-gray-200">
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="md:order-2">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Argument 2: Demonstrating Economic Progress</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">Here, Du Bois counters the narrative that newly freed Black citizens were not contributing economically. This bar chart shows the steady, determined accumulation of property value in Georgia over just 25 years. It's a visual testament to resilience and community-building in the face of immense adversity. The upward trend is an argument for the economic potential and success of Black Americans.</p>
+                    </div>
+                    <div class="chart-container md:order-1">
+                        <canvas id="duboisPropertyChart"></canvas>
+                    </div>
+                </div>
+
+                <hr class="my-12 border-t-2 border-gray-200">
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Argument 3: Highlighting Systemic Inequality</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">This chart directly compares the occupations of Black and White Georgians. By placing the bars side-by-side, Du Bois starkly illustrates economic segregation. This is not a neutral presentation; it is a visual indictment of a system that limits opportunity. Your infographic should similarly use data to build a clear argument.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="duboisBarChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="rubric" class="content-section">
+             <div class="bg-white rounded-lg shadow-sm p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Deliverable & Grading Rubric</h1>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-3">Final Deliverable</h2>
+                <p class="text-gray-700 mb-8">A single-page, static infographic (submitted as PDF or high-resolution image) that presents a clear argument about your chosen social problem to your target audience.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-stone-50"><tr><th class="p-3">Criteria (2.5 pts each)</th><th class="p-3">Exemplary</th><th class="p-3">Proficient</th><th class="p-3">Developing</th></tr></thead>
+                        <tbody>
+                            <tr class="border-b"><td class="p-3 font-medium">Clarity of Message & Argument</td><td class="p-3">The infographic has a clear, powerful thesis; all elements support this central argument.</td><td class="p-3">The infographic has a clear message, though some elements may be extraneous.</td><td class="p-3">The core message is unclear or inconsistent.</td></tr>
+                            <tr class="border-b"><td class="p-3 font-medium">Data Selection & Visualization</td><td class="p-3">Data points are highly relevant and visualized in the most effective chart/graphical form.</td><td class="p-3">Data is relevant and visualizations are clear, but could be more impactful.</td><td class="p-3">Data is weak, irrelevant, or visualized in a confusing way.</td></tr>
+                            <tr class="border-b"><td class="p-3 font-medium">Design & Visual Hierarchy</td><td class="p-3">Layout, color, and typography create a clear, cohesive, and visually engaging flow.</td><td class="p-3">The design is clean and readable, but hierarchy could be stronger.</td><td class="p-3">The design is cluttered, confusing, or visually unappealing.</td></tr>
+                            <tr><td class="p-3 font-medium">Call to Action (CTA)</td><td class="p-3">The CTA is specific, prominent, and logically flows from the infographic's argument.</td><td class="p-3">A CTA is present and clear, but may not be well-integrated.</td><td class="p-3">The CTA is missing, vague, or irrelevant.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- STATE MANAGEMENT ---
+            let projectData = {};
+            const PROJECT_KEY = 'activistInfographicProject';
+
+            const defaultData = {
+                problem: '', audience: { name: '', desc: '' }, coreMessage: '',
+                dataPoints: [], visualMetaphor: '',
+                colorPalette: 'palette1', fontPairing: 'font1',
+                layout: 'pyramid', wireframeContent: {}, callToAction: ''
+            };
+
+            function saveData() {
+                localStorage.setItem(PROJECT_KEY, JSON.stringify(projectData));
+            }
+
+            function loadData() {
+                const saved = localStorage.getItem(PROJECT_KEY);
+                projectData = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(defaultData));
+            }
+
+            // --- UI BINDING & INITIALIZATION ---
+            function bindInputs() {
+                document.getElementById('problem-def').value = projectData.problem;
+                document.getElementById('audience-name').value = projectData.audience.name;
+                document.getElementById('audience-desc').value = projectData.audience.desc;
+                document.getElementById('core-message').value = projectData.coreMessage;
+                document.getElementById('visual-metaphor').value = projectData.visualMetaphor;
+                document.getElementById('layout-selector').value = projectData.layout;
+                document.getElementById('call-to-action').value = projectData.callToAction;
+
+                document.getElementById('problem-def').addEventListener('input', e => { projectData.problem = e.target.value; saveData(); });
+                document.getElementById('audience-name').addEventListener('input', e => { projectData.audience.name = e.target.value; saveData(); });
+                document.getElementById('audience-desc').addEventListener('input', e => { projectData.audience.desc = e.target.value; saveData(); });
+                document.getElementById('core-message').addEventListener('input', e => { projectData.coreMessage = e.target.value; saveData(); updateContentBank(); });
+                document.getElementById('visual-metaphor').addEventListener('input', e => { projectData.visualMetaphor = e.target.value; saveData(); });
+                document.getElementById('layout-selector').addEventListener('change', e => { projectData.layout = e.target.value; projectData.wireframeContent = {}; saveData(); renderWireframe(); updateContentBank(); });
+                document.getElementById('call-to-action').addEventListener('input', e => { projectData.callToAction = e.target.value; saveData(); });
+            }
+
+            // --- NAVIGATION AND TABS ---
+            function setupNavigation() {
+                const navLinks = document.querySelectorAll('#main-nav a'), mobileNav = document.getElementById('mobile-nav'), sections = document.querySelectorAll('.content-section');
+                const switchContent = id => {
+                    sections.forEach(s => s.classList.toggle('active', s.id === id));
+                    navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+                    if (mobileNav.value !== id) mobileNav.value = id;
+                };
+                navLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); switchContent(l.dataset.target); }));
+                mobileNav.addEventListener('change', e => switchContent(e.target.value));
+            }
+
+            function setupTabs() {
+                const tabs = document.querySelectorAll('#tabs-container .tab-button'), contents = document.querySelectorAll('.tab-content');
+                tabs.forEach(tab => tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    contents.forEach(c => c.style.display = 'none');
+                    document.getElementById(tab.dataset.tab).style.display = 'block';
+                }));
+            }
+            
+            function setupAccordions() {
+                document.querySelectorAll('.accordion-header').forEach(header => header.addEventListener('click', () => {
+                    const content = header.nextElementSibling, icon = header.querySelector('.accordion-icon');
+                    content.classList.toggle('hidden');
+                    icon.textContent = content.classList.contains('hidden') ? '+' : '-';
+                }));
+            }
+
+            // --- ACTIVITY 1.3: DATA SCAFFOLDING ---
+            function renderDataPoints() {
+                const container = document.getElementById('data-points-container');
+                container.innerHTML = '';
+                projectData.dataPoints.forEach((dp, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'p-3 border rounded-lg bg-gray-50';
+                    el.innerHTML = `
+                        <input type="text" value="${dp.text}" data-index="${index}" data-field="text" class="block w-full border-gray-300 rounded-md font-medium" placeholder="Data Point ${index + 1}">
+                        <textarea data-index="${index}" data-field="source" class="mt-2 block w-full border-gray-300 rounded-md text-sm" rows="1" placeholder="Source/Citation">${dp.source}</textarea>
+                    `;
+                    container.appendChild(el);
+                });
+                container.querySelectorAll('input, textarea').forEach(input => input.addEventListener('input', e => {
+                    const { index, field } = e.target.dataset;
+                    projectData.dataPoints[index][field] = e.target.value;
+                    saveData();
+                    updateContentBank();
+                    renderChartSelection();
+                }));
+            }
+
+            // --- ACTIVITY 2.1: VISUAL TONE ---
+            const palettes = { palette1: ['#D72638', '#3E506B', '#F4D6CC', '#78A1BB'], palette2: ['#00A676', '#3D405B', '#F2CC8F', '#81B29A'] };
+            const fontPairs = { font1: { head: "'Lora', serif", body: "'Inter', sans-serif" }, font2: { head: "'Inter', sans-serif", body: "'Lora', serif" } };
+            function setupMoodBoard() {
+                const paletteContainer = document.getElementById('color-palette-selector');
+                paletteContainer.innerHTML = '';
+                Object.entries(palettes).forEach(([key, colors]) => {
+                    const pEl = document.createElement('div');
+                    pEl.className = `flex items-center space-x-2 p-1 border-2 rounded-md cursor-pointer ${projectData.colorPalette === key ? 'border-blue-500' : 'border-transparent'}`;
+                    pEl.onclick = () => { projectData.colorPalette = key; saveData(); setupMoodBoard(); };
+                    colors.forEach(c => pEl.innerHTML += `<div class="h-6 w-6 rounded" style="background-color:${c};"></div>`);
+                    paletteContainer.appendChild(pEl);
+                });
+                const fontContainer = document.getElementById('font-pairing-selector');
+                fontContainer.innerHTML = '';
+                Object.entries(fontPairs).forEach(([key, fonts]) => {
+                    const fEl = document.createElement('div');
+                    fEl.className = `p-2 border rounded-md cursor-pointer ${projectData.fontPairing === key ? 'bg-blue-50 border-blue-500' : ''}`;
+                    fEl.onclick = () => { projectData.fontPairing = key; saveData(); setupMoodBoard(); };
+                    fEl.innerHTML = `<h4 style="font-family:${fonts.head};" class="text-lg">Heading Font</h4><p style="font-family:${fonts.body};" class="text-sm">Body font for descriptions.</p>`;
+                    fontContainer.appendChild(fEl);
+                });
+            }
+
+            // --- ACTIVITY 2.2: LAYOUT & FLOW ---
+            let draggedItem = null;
+            function updateContentBank() {
+                const bank = document.getElementById('content-bank');
+                bank.innerHTML = '';
+                const items = [{ id: 'core', text: projectData.coreMessage }, ...projectData.dataPoints];
+                const usedIds = Object.values(projectData.wireframeContent);
+                items.forEach(item => {
+                    if (item.text && !usedIds.includes(String(item.id))) {
+                        const el = document.createElement('div');
+                        el.className = 'data-draggable p-2 bg-white border rounded-md shadow-sm';
+                        el.draggable = true;
+                        el.dataset.id = item.id;
+                        el.textContent = item.text.substring(0, 50) + (item.text.length > 50 ? '...' : '');
+                        el.addEventListener('dragstart', e => { draggedItem = e.target; });
+                        bank.appendChild(el);
+                    }
+                });
+            }
+
+            function renderWireframe() {
+                const container = document.getElementById('wireframe-container');
+                const layouts = {
+                    pyramid: `<div class="wireframe-zone p-4" data-zone="1"></div><div class="flex gap-4"><div class="wireframe-zone p-4 flex-1" data-zone="2"></div><div class="wireframe-zone p-4 flex-1" data-zone="3"></div></div><div class="wireframe-zone p-4" data-zone="4"></div>`,
+                    timeline: `<div class="wireframe-zone p-4" data-zone="1"></div><div class="pl-4 border-l-2 border-dashed ml-4 my-2"><div class="wireframe-zone p-4 mb-4" data-zone="2"></div><div class="wireframe-zone p-4 mb-4" data-zone="3"></div><div class="wireframe-zone p-4" data-zone="4"></div></div>`,
+                    comparison: `<div class="wireframe-zone p-4" data-zone="1"></div><div class="grid grid-cols-2 gap-4"><div class="wireframe-zone p-4" data-zone="2"></div><div class="wireframe-zone p-4" data-zone="3"></div><div class="wireframe-zone p-4" data-zone="4"></div><div class="wireframe-zone p-4" data-zone="5"></div></div>`
+                };
+                container.innerHTML = layouts[projectData.layout];
+                container.querySelectorAll('.wireframe-zone').forEach(zone => {
+                    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+                    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                    zone.addEventListener('drop', e => {
+                        e.preventDefault();
+                        zone.classList.remove('drag-over');
+                        if (draggedItem) {
+                            const oldZone = Object.keys(projectData.wireframeContent).find(key => projectData.wireframeContent[key] === draggedItem.dataset.id);
+                            if (oldZone) delete projectData.wireframeContent[oldZone];
+                            projectData.wireframeContent[zone.dataset.zone] = draggedItem.dataset.id;
+                            saveData();
+                            renderWireframe();
+                            updateContentBank();
+                        }
+                    });
+                });
+                Object.entries(projectData.wireframeContent).forEach(([zoneId, contentId]) => {
+                    const zone = container.querySelector(`[data-zone="${zoneId}"]`);
+                    if (zone) {
+                        const item = contentId === 'core' ? { id: 'core', text: projectData.coreMessage } : projectData.dataPoints.find(dp => dp.id == contentId);
+                        if(item) zone.innerHTML = `<div class="p-2 bg-blue-100 border border-blue-300 rounded-md shadow-sm text-sm">${item.text.substring(0, 50)}...</div>`;
+                    }
+                });
+            }
+
+            // --- ACTIVITY 3.1: CHART SELECTION ---
+            function renderChartSelection() {
+                const container = document.getElementById('chart-selection-container');
+                container.innerHTML = '';
+                const chartTypes = ['Number', 'Icon Array', 'Pie Chart', 'Bar Chart', 'Line Chart'];
+                projectData.dataPoints.forEach(dp => {
+                    if(!dp.text) return;
+                    const el = document.createElement('div');
+                    el.className = 'p-4 border rounded-lg bg-gray-50';
+                    let optionsHTML = chartTypes.map(type => `<label class="flex items-center"><input type="radio" name="chart-type-${dp.id}" value="${type}" ${dp.viz === type ? 'checked' : ''}> <span class="ml-2">${type}</span></label>`).join('');
+                    el.innerHTML = `<p class="font-medium mb-2">${dp.text}</p><div class="flex flex-wrap gap-x-4 gap-y-2">${optionsHTML}</div>`;
+                    container.appendChild(el);
+                });
+                container.querySelectorAll('input[type="radio"]').forEach(radio => radio.addEventListener('change', e => {
+                    const id = parseInt(e.name.replace('chart-type-', ''));
+                    const dp = projectData.dataPoints.find(p => p.id === id);
+                    if (dp) { dp.viz = e.target.value; saveData(); }
+                }));
+            }
+
+            // --- EVENT LISTENERS ---
+            document.getElementById('add-data-point-btn').addEventListener('click', () => {
+                projectData.dataPoints.push({ id: Date.now(), text: '', source: '', viz: 'Number' });
+                saveData();
+                renderDataPoints();
+                updateContentBank();
+                renderChartSelection();
+            });
+
+            // --- INITIALIZE & RENDER ---
+            loadData();
+            setupNavigation();
+            setupTabs();
+            setupAccordions();
+            bindInputs();
+            renderDataPoints();
+            setupMoodBoard();
+            renderWireframe();
+            updateContentBank();
+            renderChartSelection();
+
+            // --- CASE STUDY CHARTS ---
+            const defaultChartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { family: "'Inter', sans-serif" } } } }, font: { family: "'Inter', sans-serif" } };
+            
+            // Literacy Chart
+            new Chart(document.getElementById('duboisLiteracyChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['1860', '1870', '1880', '1890', '1900'],
+                    datasets: [
+                        { label: 'Illiterate', data: [90, 81.4, 70, 57.1, 44.5], backgroundColor: '#3C3C3B' },
+                        { label: 'Literate', data: [10, 18.6, 30, 42.9, 55.5], backgroundColor: '#F4D6CC' }
+                    ]
+                },
+                options: { ...defaultChartOptions, scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: v => v + '%' } } }, plugins: { ...defaultChartOptions.plugins, title: { display: true, text: "Rise in Black Literacy in Georgia", font: {size: 16, family: "'Lora', serif"} } } }
+            });
+
+            // Property Value Chart
+            new Chart(document.getElementById('duboisPropertyChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['1875', '1880', '1885', '1890', '1895', '1900'],
+                    datasets: [{ label: 'Assessed Value ($)', data: [5792429, 5174092, 7924103, 11216312, 12078637, 12433067], backgroundColor: '#78A1BB' }]
+                },
+                options: { ...defaultChartOptions, plugins: { ...defaultChartOptions.plugins, legend: { display: false }, title: { display: true, text: "Assessed Value of Property - Georgia", font: {size: 16, family: "'Lora', serif"} } } }
+            });
+
+            // Occupation Chart
+            new Chart(document.getElementById('duboisBarChart').getContext('2d'), {
+                type: 'bar',
+                data: { labels: ['Agriculture', 'Service', 'Manufacturing', 'Trade', 'Professions'], datasets: [{ label: 'Black Population', data: [62.2, 28.5, 4.3, 3.8, 1.2], backgroundColor: '#3C3C3B' }, { label: 'White Population', data: [40.4, 9.6, 17.1, 25.1, 7.8], backgroundColor: '#D72638' }] },
+                options: { ...defaultChartOptions, indexAxis: 'y', scales: { x: { ticks: { callback: v => v + '%' } } }, plugins: { ...defaultChartOptions.plugins, title: { display: true, text: "Occupational Distribution in Georgia (%)", font: {size: 16, family: "'Lora', serif"} } } }
+            });
+        });
+    </script>
+</body>
+</html>
+
